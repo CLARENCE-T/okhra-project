@@ -8,6 +8,7 @@
   "author": "Tanguy Clarence <tanguy.clarence@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "adminjs": "^5.2.1",
     "apollo-server": "^3.3.0",
     "bcryptjs": "^2.4.3",
     "dotenv": "^10.0.0",

@@ -6,7 +6,6 @@ const ProductSchema = new mongoose.Schema(
       type: String,
       require: true,
       minlength: 3,
-      maxLength: 20,
       trim: true,
     },
     description: {
@@ -42,7 +41,7 @@ const ProductSchema = new mongoose.Schema(
     },
     quantity: {
       type: Number,
-      require: true,
+      // require: true,
     },
   },
   {
@@ -51,10 +50,6 @@ const ProductSchema = new mongoose.Schema(
 );
 
 module.exports = mongoose.model("Product", ProductSchema);
-
-
-
-
 
 // {
 //   "name": "Mariniere",
