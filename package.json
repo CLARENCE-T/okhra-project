@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index"
+    "start": "node index",
+    "start:dev": "nodemon index"
   },
   "author": "Tanguy Clarence <tanguy.clarence@gmail.com>",
   "license": "MIT",
