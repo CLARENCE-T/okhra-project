@@ -11,8 +11,27 @@ module.exports = gql`
   }
   type Mutation {
     addProduct(body: String!): Product!
+    deleteProduct(productId: ID!): String!
+    createOrder(body: String!): Order!
+    deleteOrder(orderId: ID!): String!
     register(registerInput: RegisterInput): User!
-    login(username: String!, password: String!): User!
+    login(email: String!, password: String!): User!
+    adminLogin(username: String!, email: String!, password: String!): Admin!
+    createAdmin(adminInfo: AdminInfo): Admin!
+  }
+  # ADMIN
+  type Admin {
+    _id: ID!
+    password: String!
+    email: String!
+    token: String
+    username: String!
+  }
+  input AdminInfo {
+    username: String!
+    email: String!
+    password: String!
+    confirmPassword: String!
   }
   # USERS
   type User {
@@ -40,10 +59,7 @@ module.exports = gql`
     price: Int
     quantity: Int
   }
-  # input AddProductInput {
-  #   name: String!
-  #   # category: String!
-  # }
+
   # ORDERS
   type Order {
     _id: ID!

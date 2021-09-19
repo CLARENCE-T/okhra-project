@@ -39,24 +39,19 @@ module.exports = {
           // category,
         });
         const res = await newProduct.save();
-        return {
-          ...res._doc,
-          id: res._id,
-          name,
-          // category,
-        };
+        return res;
       } catch (err) {
         throw new Error(`erreur dans creationProduct ${err}`);
       }
     },
-    async deletePost(_, { postId }, context) {
+    async deleteProduct(_, { productId }, context) {
       const user = checkAuth(context);
 
       try {
-        const post = await Post.findById(postId);
-        if (user.username === post.username) {
-          await post.delete();
-          return "Post deleted successfully";
+        const product = await Product.findById(productId);
+        if (user.email === product.email) {
+          await product.delete();
+          return "Product deleted successfully";
         } else {
           throw new AuthenticationError("Action not allowed");
         }

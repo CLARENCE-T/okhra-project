@@ -8,6 +8,7 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
 });
+
 //Connect DB
 mongoDb
   .then(() => {

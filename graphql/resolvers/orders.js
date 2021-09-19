@@ -64,32 +64,5 @@ module.exports = {
         throw new Error(err);
       }
     },
-    async likeOrder(_, { orderId }, context) {
-      const { email } = checkAuth(context);
-
-      const order = await Order.findById(orderId);
-      if (order) {
-        if (order.likes.find((like) => like.email === email)) {
-          // Order already likes, unlike it
-          order.likes = order.likes.filter(
-            (like) => like.email !== email
-          );
-        } else {
-          // Not liked, like order
-          order.likes.push({
-            email,
-            createdAt: new Date().toISOString(),
-          });
-        }
-
-        await order.save();
-        return order;
-      } else throw new UserInputError("Order not found");
-    },
-  },
-  Subscription: {
-    newOrder: {
-      subscribe: (_, __, { pubsub }) => pubsub.asyncIterator("NEW_POST"),
-    },
   },
 };
