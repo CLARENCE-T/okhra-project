@@ -1,7 +1,6 @@
 const productsResolvers = require("./products");
 const usersResolvers = require("./users");
 const ordersResolvers = require("./orders");
-const adminsResolvers = require("./admins");
 
 module.exports = {
   Query: {
@@ -13,6 +12,5 @@ module.exports = {
     ...usersResolvers.Mutation,
     ...productsResolvers.Mutation,
     ...ordersResolvers.Mutation,
-    ...adminsResolvers.Mutation,
   },
 };

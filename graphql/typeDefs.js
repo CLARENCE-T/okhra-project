@@ -4,45 +4,31 @@ module.exports = gql`
   type Query {
     users: [User]
     user(userId: ID!): User!
-    products: [Product]!
+    getProducts: [Product]!
     product(productId: ID!): Product!
     orders: [Order!]!
     order(orderId: ID!): Order!
   }
   type Mutation {
-    addProduct(body: String!): Product!
+    addProduct(productInput: ProductInput!): Product!
     deleteProduct(productId: ID!): String!
+    register(registerInput: RegisterInput!): User!
+    login(email: String!, password: String!): User!
     createOrder(body: String!): Order!
     deleteOrder(orderId: ID!): String!
-    register(registerInput: RegisterInput): User!
-    login(email: String!, password: String!): User!
-    adminLogin(username: String!, email: String!, password: String!): Admin!
-    createAdmin(adminInfo: AdminInfo): Admin!
-  }
-  # ADMIN
-  type Admin {
-    _id: ID!
-    password: String!
-    email: String!
-    token: String
-    username: String!
-  }
-  input AdminInfo {
-    username: String!
-    email: String!
-    password: String!
-    confirmPassword: String!
   }
   # USERS
   type User {
     _id: ID!
     firstName: String
     lastName: String
-    password: String!
+    username: String
+    password: String
     confirmPassword: String
     email: String!
+    admin: Boolean!
     token: String
-    createdAt: String!
+    createdAt: String
   }
   input RegisterInput {
     email: String!
@@ -55,11 +41,14 @@ module.exports = gql`
     name: String!
     description: String
     category: String!
-    size: String
     price: Int
     quantity: Int
+    createdAt: String
   }
-
+  input ProductInput {
+    name: String!
+    description: String!
+  }
   # ORDERS
   type Order {
     _id: ID!

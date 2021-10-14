@@ -8,6 +8,7 @@ require("dotenv").config({ path: "./config/.env" });
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  context: ({ req }) => ({ req }),
 });
 
 const port = process.env["PORT"] || 80;
@@ -21,4 +22,7 @@ mongoDb
   .then(() => {
     console.log(`Server is running at ${port}`);
   })
-  .catch((err) => console.log("failed to connect:" + err));
+  .catch((err) => {
+    console.log("failed to connect:" + err);
+    process.exit(1);
+  });

@@ -4,19 +4,19 @@ const ProductSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      require: true,
+      // require: true,
       minlength: 3,
       trim: true,
     },
     description: {
       type: String,
-      require: true,
+      // require: true,
       minlength: 3,
       maxLength: 400,
     },
     category: {
       type: String,
-      require: true,
+      // require: true,
       enum: [
         "T-shirts",
         "Shirts",
@@ -27,20 +27,24 @@ const ProductSchema = new mongoose.Schema(
     },
     size: {
       type: String,
-      require: true,
+      // require: true,
       enum: ["XS", "S", "M", "L", "XL", "XXL"],
     },
     price: {
       type: Number,
-      require: true,
+      // require: true,
       currency: {
         type: String,
         enum: ["EUR", "USD"],
         default: "EUR",
       },
     },
-    quantity: {
+    countInStock: {
       type: Number,
+      // require: true,
+    },
+    imageUrl: {
+      type: String,
       // require: true,
     },
   },

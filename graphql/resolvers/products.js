@@ -5,9 +5,9 @@ const checkAuth = require("../../util/check-auth");
 
 module.exports = {
   Query: {
-    async products() {
+    async getProducts() {
       try {
-        const products = await Product.find();
+        const products = await Product.find().sort({ createdAt: -1 });
         return products;
       } catch (err) {
         throw new Error(`il y a une erreur:  ${err}`);
@@ -27,21 +27,26 @@ module.exports = {
     },
   },
   Mutation: {
-    async addProduct(_, { body }, context) {
+    async addProduct(_, { productInput }, context) {
       const user = checkAuth(context);
 
-      try {
-        if (body.trim() === "") {
-          throw new Error("Please provide valid credentials");
+      if (user.admin) {
+        const { name, description } = productInput;
+        try {
+          if (name.trim() === "" || description.trim() === "") {
+            throw new Error(`Please provide valid credentials`);
+          }
+          const newProduct = new Product({
+            name,
+            description,
+          });
+          const product = await newProduct.save();
+          return product;
+        } catch (err) {
+          throw new Error(`erreur dans creationProduct ${err}`);
         }
-        const newProduct = new Product({
-          body,
-          // category,
-        });
-        const res = await newProduct.save();
-        return res;
-      } catch (err) {
-        throw new Error(`erreur dans creationProduct ${err}`);
+      } else {
+        throw new Error(`You don't have the permission`);
       }
     },
     async deleteProduct(_, { productId }, context) {
@@ -49,7 +54,7 @@ module.exports = {
 
       try {
         const product = await Product.findById(productId);
-        if (user.email === product.email) {
+        if (user.admin) {
           await product.delete();
           return "Product deleted successfully";
         } else {
