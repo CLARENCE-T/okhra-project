@@ -13,7 +13,7 @@ module.exports = {
         throw new Error(`il y a une erreur:  ${err}`);
       }
     },
-    async product(_, { productId }) {
+    async getProduct(_, { productId }) {
       try {
         const product = await Product.findById(productId);
         if (product) {

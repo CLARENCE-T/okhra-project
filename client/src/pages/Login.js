@@ -6,7 +6,7 @@ import gql from "graphql-tag";
 import { AuthContext } from "../context/auth";
 import { useForm } from "../util/hooks";
 
-function Login(props) {
+function Login() {
   const context = useContext(AuthContext);
   const [errors, setErrors] = useState({});
 
@@ -20,15 +20,13 @@ function Login(props) {
       context.login(userData);
     },
     onError(err) {
-      console.log(`erreur ${err}`);
-      // setErrors(err.graphQLErrors[0].extensions.exception.errors);
+      setErrors(err.graphQLErrors[0].extensions.errors);
     },
     variables: values,
   });
 
   function loginUserCallback() {
     loginUser();
-    console.log(context);
   }
 
   return (

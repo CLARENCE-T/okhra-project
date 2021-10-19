@@ -1,30 +1,29 @@
 import React from "react";
 import { Button, Form } from "semantic-ui-react";
 import gql from "graphql-tag";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation, useQuery } from "@apollo/react-hooks";
 
 import { useForm } from "../util/hooks";
 import { FETCH_PRODUCTS_QUERY } from "../util/graphql";
 
-function PostForm() {
-  const { values, onChange, onSubmit } = useForm(createPostCallback, {
-    body: "",
+function ProductForm() {
+  const { refetch } = useQuery(FETCH_PRODUCTS_QUERY);
+  const { values, onChange, onSubmit } = useForm(addProductCallback, {
+    name: "",
+    description: "",
   });
 
-  const [createPost, { error }] = useMutation(CREATE_POST_MUTATION, {
+  const [addProduct, { error }] = useMutation(CREATE_PRODUCT_MUTATION, {
     variables: values,
-    update(proxy, result) {
-      const data = proxy.readQuery({
-        query: FETCH_PRODUCTS_QUERY,
-      });
-      data.getPosts = [result.data.createPost, ...data.getPosts];
-      proxy.writeQuery({ query: FETCH_PRODUCTS_QUERY, data });
-      values.body = "";
+    update() {
+      refetch();
+      values.name = "";
+      values.description = "";
     },
   });
 
-  function createPostCallback() {
-    createPost();
+  function addProductCallback() {
+    addProduct();
   }
 
   return (
@@ -51,26 +50,27 @@ function PostForm() {
           </Button>
         </Form.Field>
       </Form>
-      {error && (
-        <div className="ui error message" style={{ marginBottom: 20 }}>
-          <ul className="list">
-            <li>{error.graphQLErrors[0].message}</li>
-          </ul>
-        </div>
-      )}
+      {error &&
+        console.log(error) &
+        (
+          <div className="ui error message" style={{ marginBottom: 20 }}>
+            <ul className="list">
+              <li>{error.message}</li>
+            </ul>
+          </div>
+        )}
     </>
   );
 }
 
-const CREATE_POST_MUTATION = gql`
-  mutation createPost($body: String!) {
-    createPost(body: $body) {
-      id
-      body
-      createdAt
-      username
+const CREATE_PRODUCT_MUTATION = gql`
+  mutation addProduct($name: String!, $description: String!) {
+    addProduct(productInput: { name: $name, description: $description }) {
+      _id
+      description
+      name
     }
   }
 `;
 
-export default PostForm;
+export default ProductForm;

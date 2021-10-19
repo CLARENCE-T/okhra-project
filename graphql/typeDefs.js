@@ -5,7 +5,7 @@ module.exports = gql`
     users: [User]
     user(userId: ID!): User!
     getProducts: [Product]!
-    product(productId: ID!): Product!
+    getProduct(productId: ID!): Product!
     orders: [Order!]!
     order(orderId: ID!): Order!
   }
@@ -40,10 +40,10 @@ module.exports = gql`
     _id: ID!
     name: String!
     description: String
-    category: String!
+    category: String
     price: Int
     quantity: Int
-    createdAt: String
+    createdAt: String!
   }
   input ProductInput {
     name: String!

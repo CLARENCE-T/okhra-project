@@ -6,6 +6,7 @@ export const FETCH_PRODUCTS_QUERY = gql`
       _id
       name
       description
+      createdAt
     }
   }
 `;

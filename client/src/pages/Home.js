@@ -1,12 +1,11 @@
-import React, { useContext } from "react";
-import { Segment, Tab } from "semantic-ui-react";
+import React from "react";
+import { Tab } from "semantic-ui-react";
 
-import { AuthContext } from "../context/auth";
 import Products from "./Products";
+import Account from "./Account";
 import { useHistory } from "react-router";
 
 function Home(props) {
-  const { user } = useContext(AuthContext);
   const { match } = props;
   const { params } = match;
   const { active_tab } = params;
@@ -25,7 +24,14 @@ function Home(props) {
   };
 
   const panes = [
-    { menuItem: "Account", render: () => <Tab.Pane>User</Tab.Pane> },
+    {
+      menuItem: "Account",
+      render: () => (
+        <Tab.Pane>
+          <Account />
+        </Tab.Pane>
+      ),
+    },
     {
       menuItem: "Products",
       render: () => (

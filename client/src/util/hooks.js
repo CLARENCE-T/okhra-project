@@ -9,7 +9,6 @@ export const useForm = (callback, initialState = {}) => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    // window.location.href = "/home";
     callback();
   };
 

@@ -12,7 +12,7 @@ function Products() {
   const { loading, data, refetch } = useQuery(FETCH_PRODUCTS_QUERY);
 
   return (
-    <Grid columns={1}>
+    <Grid columns={2}>
       <Grid.Row className="page-title">
         <h1>Recent Products</h1>
       </Grid.Row>
@@ -22,15 +22,16 @@ function Products() {
             <ProductForm />
           </Grid.Column>
         )}
-
-        <Button
-          style={{ margin: 13 }}
-          secondary
-          position="right"
-          onClick={() => refetch()}
-        >
-          Refetch!
-        </Button>
+      </Grid.Row>
+      <Button
+        style={{ marginLeft: 13 }}
+        secondary
+        position="right"
+        onClick={() => refetch()}
+      >
+        Refetch!
+      </Button>
+      <Grid.Row>
         {loading ? (
           <h1>Loading products..</h1>
         ) : (

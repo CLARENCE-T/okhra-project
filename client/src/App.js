@@ -12,7 +12,7 @@ import AuthRoute from "./util/AuthRoute";
 import MenuBar from "./components/MenuBar";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import SinglePost from "./pages/SinglePost";
+import SingleProduct from "./pages/SingleProduct";
 import ProtectedRoute from "./util/ProtectedRoute";
 
 function App() {
@@ -27,7 +27,7 @@ function App() {
             <ProtectedRoute path="/home/:active_tab?" component={Home} />
           </Switch>
           <AuthRoute exact path="/login" component={Login} />
-          <Route exact path="/posts/:postId" component={SinglePost} />
+          <Route exact path="/products/:productId" component={SingleProduct} />
         </Container>
       </Router>
     </AuthProvider>
